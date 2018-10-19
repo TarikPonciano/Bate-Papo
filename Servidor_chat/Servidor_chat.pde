@@ -42,6 +42,7 @@ void keyPressed(){
         message = "Servidor: ";
         println(dataOut);
         desenharMensagem();
+        mensagensRecebidas(dataOut);
       }
       
       if(key==BACKSPACE){

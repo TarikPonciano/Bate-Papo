@@ -5,9 +5,11 @@ import processing.net.*;
 Client myClient;
 String dataOut;
 String dataIn;
-
-String message= "Tarik: ";
-String inicial= "Tarik: ";
+String username = "Tarik";
+String login = username +" se conectou";
+int nameSize = username.length();
+String message= username +": ";
+String inicial= username +": ";
 String messagesReceived[] = new String[9];
 
 
@@ -26,13 +28,26 @@ void setup() {
  
 void draw() { 
   if (myClient.available() > 0) { 
-    dataIn = myClient.readString(); 
-    mensagensRecebidas(dataIn);
+    dataIn = myClient.readString();
+    
+    checkMessage(dataIn);
+    
     println(dataIn);
   } 
   
   
 } 
+
+void checkMessage(String mensagem){
+  
+  String check = mensagem.substring(0,nameSize);
+  println(check);
+  println(username);
+  if (check.equals(username) != true){
+    mensagensRecebidas(mensagem);
+  }
+
+}
 
 void keyPressed(){
     if(key==ENTER||key==BACKSPACE){
@@ -43,6 +58,7 @@ void keyPressed(){
         message = inicial;
         println(dataOut);
         desenharMensagem();
+        mensagensRecebidas(dataOut);
       }
       
       if(key==BACKSPACE){
@@ -89,17 +105,3 @@ messagesReceived[0] = mensagem;
 desenharMensagem();
 }
   
-
-/*EXTRAS
-
-  
-stop()   Desconecta do servidor
-active()   Retorna true se este cliente ainda estiver ativo
-ip()   Retorna o endereço IP da máquina como uma string
-available()   Retorna o número de bytes no buffer esperando para ser lido
-clear()   Limpa o buffer
-read()   Retorna um valor do buffer
-...
-write()   Escreve bytes, chars, ints, bytes[], Strings
-
-*/
